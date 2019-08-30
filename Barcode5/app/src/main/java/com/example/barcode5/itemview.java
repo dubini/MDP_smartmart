@@ -33,17 +33,17 @@ public class itemview extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.activity_itemview, this, true);
 
-        textView = (TextView) findViewById(R.id.name);
-        textView2 = (TextView) findViewById(R.id.price);
-        textView3 = (TextView) findViewById(R.id.account);
+        textView = (TextView) findViewById(R.id.textView);
+        textView2 = (TextView) findViewById(R.id.textView2);
+        textView3 = (TextView) findViewById(R.id.textView3);
         imageView = (ImageView) findViewById(R.id.imageView);
-        plus = (Button)findViewById(R.id.plus);
-        minus = (Button)findViewById(R.id.minus);
 
 
     }
 
-    public void setName(String name) { textView.setText(name); }
+    public void setName(String name) {
+        textView.setText(name);
+    }
 
     public void setPrice(int price) {
         textView2.setText(String.valueOf(price));
@@ -56,6 +56,4 @@ public class itemview extends LinearLayout {
     public void setImage(int resId) {
         imageView.setImageResource(resId);
     }
-
-    public void setPlus
 }

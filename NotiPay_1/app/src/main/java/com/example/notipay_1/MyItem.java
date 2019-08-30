@@ -1,17 +1,16 @@
 package com.example.notipay_1;
-import android.graphics.drawable.Drawable;
 
 public class MyItem {
 
-    private Drawable icon;
-    private String name,price;
-    private int account=1;
+    private String name;
+    private int price;
+    private int account;
+    private int icon;
 
-    public Drawable getIcon() {
-        return icon;
-    }
-
-    public void setIcon(Drawable icon) {
+    public MyItem(String name, int price, int account, int icon) {
+        this.name = name;
+        this.price = price;
+        this.account = account;
         this.icon = icon;
     }
 
@@ -22,18 +21,28 @@ public class MyItem {
     public void setName(String name) {
         this.name = name;
     }
-    public String getPrice() {
+
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
+
     public int getAccount() {
         return account;
     }
 
     public void setAccount(int account) {
         this.account = account;
+    }
+
+    public int getIcon() {
+        return icon;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
     }
 }

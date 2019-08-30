@@ -7,27 +7,31 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="20"
-        android:layout_height="50dp">
+        android:layout_height="60dp">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/img"
-            android:src="@drawable/icon"/>
+            android:id="@+id/imageView"
+            android:src="@drawable/apple"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="60"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="60"
+            android:textColor="@android:color/background_dark"
             android:id="@+id/name"/>
 
         <TextView
+            android:textColor="@android:color/background_dark"
             android:id="@+id/price"
+            android:gravity="center_vertical"
+            android:textSize="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="40" />
@@ -36,7 +40,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="20"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,6 +50,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="1"
+                android:textColor="@android:color/background_dark"
+                android:gravity="center"
                 android:id="@+id/account"/>
         </LinearLayout>
         <LinearLayout
@@ -55,13 +61,13 @@
             android:orientation="horizontal">
             <Button
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:id="@+id/plus"
                 android:text="+"/>
             <Button
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:id="@+id/minus"
                 android:text="-"/>

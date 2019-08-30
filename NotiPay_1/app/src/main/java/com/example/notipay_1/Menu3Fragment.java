@@ -28,7 +28,7 @@ public class Menu3Fragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ShoppingList.class);
+                Intent intent = new Intent(getActivity(), BarScan.class);
                 startActivity(intent);
             }
         });
