@@ -14,13 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ShoppingList"></activity>
-        <activity android:name=".BarScan" />
-        <activity android:name=".Menu4Fragment" />
-        <activity android:name=".Menu3Fragment" />
-        <activity android:name=".Menu2Fragment" />
-        <activity android:name=".Menu1Fragment" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".mart_ShoppingList"></activity>
+        <activity android:name=".mart_BarScan" />
+        <activity android:name=".mart_MyItem" />
+        <activity android:name=".mart_MyItemView" />
+        <activity android:name=".mart_Server_chat" />
+        <activity android:name=".mart_Menu4Fragment" />
+        <activity android:name=".mart_Menu3Fragment" />
+        <activity android:name=".mart_Menu2Fragment" />
+        <activity android:name=".mart_Menu1Fragment" />
+        <activity android:name=".mart_MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
