@@ -107,6 +107,9 @@ public class mart_ShoppingList extends AppCompatActivity {
         server_chat.connser();
         brscan = new IntentIntegrator(this);
 
+        Intent intent = getIntent();
+        int data = intent.getIntExtra("barcode",1);
+
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,9 +124,6 @@ public class mart_ShoppingList extends AppCompatActivity {
             }
         });
 
-        Intent intent = getIntent();
-        String data = intent.getStringExtra("barcode");
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,9 +132,7 @@ public class mart_ShoppingList extends AppCompatActivity {
                 brscan.initiateScan(); //initiateScan() 함수 호출 (바코드스캐너)
             }
         });
-
-        if(data == "a"){
-            Log.d(data, "aaaaaaa");
+        if(data==123){
             fab.performClick();
         }
     }
@@ -191,7 +189,6 @@ public class mart_ShoppingList extends AppCompatActivity {
                     } else {
                         Toast.makeText(this, "없는 바코드", Toast.LENGTH_SHORT).show();
                     }
-
                     server_chat.senddata(bar_code); //server_chat 의 함수 senddata 에 변수 bar_code를 넣어 실행
                     receive = String.valueOf(mart_Server_chat.receive);  // Server_chat의 receive 데이터를 스트링형으로 변환
                 }

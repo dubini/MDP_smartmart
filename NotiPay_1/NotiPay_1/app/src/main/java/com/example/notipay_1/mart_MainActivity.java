@@ -45,9 +45,8 @@ public class mart_MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), mart_ShoppingList.class);
-                intent.putExtra("barcode","a");
+                intent.putExtra("barcode",123);
                 startActivity(intent);
-
 //                brscan.setPrompt("scanning...."); //상태 scanning
 //                brscan.setOrientationLocked(false);  //
 //                brscan.initiateScan(); //initiateScan() 함수 호출 (바코드스캐너)
