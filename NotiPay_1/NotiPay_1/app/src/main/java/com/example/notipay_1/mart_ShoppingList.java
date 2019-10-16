@@ -1,6 +1,8 @@
 package com.example.notipay_1;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,27 +28,35 @@ import java.util.ArrayList;
 
 
 public class mart_ShoppingList extends AppCompatActivity {
-    String getData;
+    String getData;  //바코드 값을 저장할 변수
     MyAdapter adapter; //어댑터 변수
 
-    ListView listView;
+    ListView listView; //리스트뷰 변수
 
-    mart_Server_chat server_chat;
-    String receive;
-    IntentIntegrator brscan;
-    public class MyAdapter extends BaseAdapter {
-        // 아이템들을 담기 위한 어레이
-        private ArrayList<mart_MyItem> mItems = new ArrayList<>();
+    mart_Server_chat server_chat; //서버 변수
+    String receive; //서버로 보내는 변수
+    IntentIntegrator brscan; //바코드를 스캔하는 변수
+    String bar_code;
+
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+
+    public void onBackPressed() {  //뒤로가기 메소드
+        finish(); //mart_ShoppingList 액티비티 종료
+    }
+    public class MyAdapter extends BaseAdapter { //MyAdpater 클래스, BaseAdapter 상속
+
+        private ArrayList<mart_MyItem> mItems = new ArrayList<>(); // 아이템들을 담기 위한 어레이
 
         @Override
         public int getCount() {
             return mItems.size();
-        }
+        } //리스트뷰가 어댑터에게 데이터가 몇 개있는지 물어보는 함수
 
         @Override
         public mart_MyItem getItem(int position) {
             return mItems.get(position);
-        }
+        } // 넘겨받은 index의 값을리턴
 
         @Override
         public long getItemId(int position) {
@@ -55,24 +65,24 @@ public class mart_ShoppingList extends AppCompatActivity {
 
         public void addItem(mart_MyItem item) {
             mItems.add(item);
-        }
+        } //mart_MyItem에 값을 넣어주는 메소드
         @Override
         public View getView(final int position, View convertView, ViewGroup viewGroup) {
-            mart_MyItemView view = new mart_MyItemView(getApplicationContext());
+            mart_MyItemView view = new mart_MyItemView(getApplicationContext()); //생성자 선언
 
-            mart_MyItem item = mItems.get(position);
-            view.setName(item.getName());
+            mart_MyItem item = mItems.get(position); //현재의 인덱스에서의 mart_MyItem
+            view.setName(item.getName()); //
             view.setPrice(item.getPrice());
             view.setAccount(item.getAccount());
             view.setImage(item.getIcon());
-
+            //리턴되는 객체가 각각의 아이템으로 보인다.
             return view;
         }
     }
 
-    void show(){
-        final EditText et = new EditText(getApplicationContext());
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    void show(){ //결제버튼을 눌렀을 때 팝업창을 띄워줌
+        final EditText et = new EditText(getApplicationContext()); //EditText를 쓰기위해 생성자선언
+        AlertDialog.Builder builder = new AlertDialog.Builder(this); //팝업창을 띄우기 위한 생성자선언
         //타이틀설정
         builder.setTitle("PIN 입력").setMessage("PIN번호를 입력하세요").setView(et);
         //내용설정
@@ -87,6 +97,7 @@ public class mart_ShoppingList extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"취소완료",Toast.LENGTH_LONG).show();
             }
         });
+        //팝업창을 띄워줌
         builder.show();
     }
 
@@ -95,6 +106,12 @@ public class mart_ShoppingList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mart_activity_shopping_list);
 
+//        //기본 SharedPreferences 환경과 관련된 객체를 얻어옵니다.
+//        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        // SharedPreferences 수정을 위한 Editor 객체를 얻어옵니다.
+//        editor = preferences.edit();
+
+        //xml의 id들을 써줌
         ImageButton home = (ImageButton) findViewById(R.id.home);
         Button pay = (Button) findViewById(R.id.pay);
         FloatingActionButton fab =  (FloatingActionButton) findViewById(R.id.FAB);
@@ -103,37 +120,39 @@ public class mart_ShoppingList extends AppCompatActivity {
 
         adapter = new MyAdapter();   // 어댑터 등록
 
-        server_chat = new mart_Server_chat();
+        server_chat = new mart_Server_chat(); //서버 등록
         server_chat.connser();
-        brscan = new IntentIntegrator(this);
+        brscan = new IntentIntegrator(this); //바코드 등록
 
-        Intent intent = getIntent();
-        int data = intent.getIntExtra("barcode",1);
+        final Intent intent = getIntent(); //메인액티비로부터 정보를 받아오는 함수
+        int data = intent.getIntExtra("barcode",1); //data에 받아온 데이터를 넣어줌
 
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+//                Intent intent1 = new Intent(getApplicationContext(), mart_MainActivity.class);
+//                startActivity(intent1);
             }
-        });
+        }); //home버튼을 눌렀을 때 mart_ShoppingList 액티비티가 종료됨
 
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 show();
             }
-        });
+        }); //pay(결제)버튼을 눌렀을 때 팝업창을 띄움
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { //바코드 버튼을 눌렀을 때 스캐너가 띄워짐
                 brscan.setPrompt("scanning...."); //상태 scanning
                 brscan.setOrientationLocked(false);  //
                 brscan.initiateScan(); //initiateScan() 함수 호출 (바코드스캐너)
             }
         });
-        if(data==123){
-            fab.performClick();
+        if(data==123){ //data와 받아온 정보가 123과 같다면
+            fab.performClick(); //바코드 스캐너를 자동으로 실행시킴
         }
     }
 
@@ -142,6 +161,7 @@ public class mart_ShoppingList extends AppCompatActivity {
         if (result != null) {
             //qr,barcode 가 없으면
             if (result.getContents() == null) {
+                onBackPressed(); //뒤로가기를 눌렀을 때 실행
                 Toast.makeText(getApplicationContext(), "취소", Toast.LENGTH_SHORT).show(); //toast 메세지
             } else {
                 try {
@@ -149,7 +169,8 @@ public class mart_ShoppingList extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     getData = result.getContents();//바코드 값 저장
-                    String bar_code = String.valueOf(getData); //스트링 형으로 변환
+                    bar_code = String.valueOf(getData); //스트링 형으로 변환
+                    //찍힌 바코드가 값과 일치하면 리스트에 상품을 추가함
                     if (bar_code.equals("12345670")) {
                         adapter.addItem(new mart_MyItem("당근", 1500, 1, R.drawable.mart_carrot));
                         listView.setAdapter(adapter);
@@ -187,7 +208,7 @@ public class mart_ShoppingList extends AppCompatActivity {
                         adapter.addItem(new mart_MyItem("한우 한 근", 700, 1, R.drawable.mart_hanwoo));
                         listView.setAdapter(adapter);
                     } else {
-                        Toast.makeText(this, "없는 바코드", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "없는 바코드", Toast.LENGTH_SHORT).show(); //일치하는 바코드가 없다면 토스트 출력
                     }
                     server_chat.senddata(bar_code); //server_chat 의 함수 senddata 에 변수 bar_code를 넣어 실행
                     receive = String.valueOf(mart_Server_chat.receive);  // Server_chat의 receive 데이터를 스트링형으로 변환

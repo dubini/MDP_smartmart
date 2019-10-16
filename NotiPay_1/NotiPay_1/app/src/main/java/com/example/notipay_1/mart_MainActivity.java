@@ -15,6 +15,11 @@ import com.google.zxing.integration.android.IntentIntegrator;
 
 public class mart_MainActivity extends AppCompatActivity {
     IntentIntegrator brscan;
+
+    public void onBackPressed() {
+        finish();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +52,7 @@ public class mart_MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), mart_ShoppingList.class);
                 intent.putExtra("barcode",123);
                 startActivity(intent);
-//                brscan.setPrompt("scanning...."); //상태 scanning
-//                brscan.setOrientationLocked(false);  //
-//                brscan.initiateScan(); //initiateScan() 함수 호출 (바코드스캐너)
             }
         });
-
     }
 }
-
